@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Sketch Pad</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="color_array">
+        <item>red</item>
+        <item>orange</item>
+        <item>yellow</item>
+        <item>green</item>
+        <item>blue</item>
+        <item>purple</item>
+        <item>black</item>
+        <item>white</item>
+    </string-array>
+
+
+    <string-array name="color_res_array">
+        <item>R.color.red</item>
+        <item>R.color.orange</item>
+        <item>R.color.yellow</item>
+        <item>R.color.green</item>
+        <item>R.color.blue</item>
+        <item>R.color.purple</item>
+        <item>R.color.black</item>
+        <item>R.color.white</item>
+    </string-array>
+</resources>
