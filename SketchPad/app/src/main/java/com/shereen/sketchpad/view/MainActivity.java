@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     MainViewModel mainViewModel;
     DrawFragment drawFragment;
+    OpenGLFragment openGLFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private void init(){
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         drawFragment = new DrawFragment();
+        openGLFragment = new OpenGLFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout, openGLFragment).commit();
     }
 
     private void listeners(){
@@ -41,14 +46,17 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.add: Log.d(Constants.LOGGER, "add");
+                            case R.id.draw: Log.d(Constants.LOGGER, "draw");
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.frameLayout, openGLFragment).commit();
+                            break;
+
+                            case R.id.saved: Log.d(Constants.LOGGER, "canvas");
                                 getSupportFragmentManager().beginTransaction()
                                         .replace(R.id.frameLayout, drawFragment).commit();
                             break;
 
-                            case R.id.home: Log.d(Constants.LOGGER, "home"); break;
-
-                            case R.id.settings: Log.d(Constants.LOGGER, "sett"); break;
+//                            case R.id.settings: Log.d(Constants.LOGGER, "sett"); break;
 
                         }
                         return true;

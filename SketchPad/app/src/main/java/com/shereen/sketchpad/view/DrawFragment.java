@@ -37,6 +37,13 @@ public class DrawFragment extends Fragment implements SketchView.FragmentCallbac
         // Required empty public constructor
     }
 
+//    SketchView.FragmentCallback mCallback = new SketchView.FragmentCallback() {
+//        @Override
+//        public void onNewTouchPath(TouchPath path) {
+//            Log.d(Constants.LOGGER, "Got new path");
+//        }
+//    };
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +62,7 @@ public class DrawFragment extends Fragment implements SketchView.FragmentCallbac
         sketchView = (SketchView) rootView.findViewById(R.id.sketchView);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        sketchView.setCallback(this);
         sketchView.init(displayMetrics);
         sketchView.normal();
     }
@@ -111,6 +119,6 @@ public class DrawFragment extends Fragment implements SketchView.FragmentCallbac
 
     @Override
     public void onNewTouchPath(TouchPath path) {
-        Log.d(Constants.LOGGER, "Got new path");
+        Log.d(Constants.LOGGER, "Got new path 123");
     }
 }
