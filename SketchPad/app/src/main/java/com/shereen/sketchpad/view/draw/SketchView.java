@@ -4,21 +4,21 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.EmbossMaskFilter;
 import android.graphics.MaskFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.shereen.sketchpad.Constants;
-import com.shereen.sketchpad.view.DrawFragment;
-import com.shereen.sketchpad.view.draw.TouchPath;
+import com.shereen.sketchpad.model.entity.TouchPath;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by shereen on 4/4/19
@@ -32,6 +32,7 @@ public class SketchView extends View {
 //    private static final float TOUCH_TOLERANCE = 4;
     private float mX, mY;
     private Path mPath;
+    private TouchPath fp;
     private Paint mPaint;
     private ArrayList<TouchPath> paths = new ArrayList<>();
     private int currentColor;
@@ -57,7 +58,7 @@ public class SketchView extends View {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
-        mPaint.setColor(Constants.DEFAULT_COLOR);
+//        mPaint.setColor(Constants.COLOR_RED);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -74,7 +75,11 @@ public class SketchView extends View {
         callback = mCallback;
     }
 
-
+    public void drawPrevious(List<TouchPath> oldPaths){
+        paths.clear();
+        paths.addAll(oldPaths);
+        invalidate();
+    }
 
     public void init(DisplayMetrics metrics) {
         int height = metrics.heightPixels;
@@ -83,18 +88,32 @@ public class SketchView extends View {
         mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
 
-        currentColor = Constants.DEFAULT_COLOR;
+        currentColor = Constants.COLOR_RED;
         strokeWidth = Constants.BRUSH_SIZE;
     }
 
     public interface FragmentCallback{
 
         void onNewTouchPath(TouchPath path);
+//        void onFinishedPath(TouchPath path);
+    }
+
+    public Bitmap getmBitmap(){
+        return mBitmap;
     }
 
     public void normal() {
         emboss = false;
         blur = false;
+    }
+
+    public void changeColor(int color){
+        currentColor = color;
+    }
+
+    public void changeBackground(int color){
+        backgroundColor = color;
+        invalidate();
     }
 
     public void emboss() {
@@ -108,14 +127,22 @@ public class SketchView extends View {
     }
 
     public void clear() {
-        backgroundColor = Constants.DEFAULT_BG_COLOR;
+//        backgroundColor = Constants.COLOR_WHITE;
         paths.clear();
         normal();
         invalidate();
     }
 
+    public void undo(){
+        if(!paths.isEmpty()){
+            paths.remove(paths.size()-1);
+            invalidate();
+        }
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
+//        Log.d(Constants.LOGGER, "onDraw");
         canvas.save();
         mCanvas.drawColor(backgroundColor);
 
@@ -138,10 +165,11 @@ public class SketchView extends View {
     }
 
     private void touchStart(float x, float y) {
+//        Log.d(Constants.LOGGER, "touchStart");
+
         mPath = new Path();
-        TouchPath fp = new TouchPath(currentColor, emboss, blur, strokeWidth, mPath);
+        fp = new TouchPath(currentColor, emboss, blur, strokeWidth, mPath);
         paths.add(fp);
-        callback.onNewTouchPath(fp);
 
         mPath.reset();
         mPath.moveTo(x, y);
@@ -162,6 +190,7 @@ public class SketchView extends View {
 
     private void touchUp() {
         mPath.lineTo(mX, mY);
+        callback.onNewTouchPath(fp);
     }
 
     @Override

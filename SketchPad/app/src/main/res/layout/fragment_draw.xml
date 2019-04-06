@@ -8,26 +8,41 @@
     <LinearLayout
         android:layout_alignParentTop="true"
         android:id="@+id/linearMenu"
+        android:gravity="center"
+        android:background="@color/gray"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp">
+
         <ImageButton
-            android:src="@android:drawable/ic_menu_camera"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:id="@+id/galleryButton"
+            android:src="@drawable/gallery"
+            style="@style/ImageStyle" />
 
         <Spinner
-            android:id="@+id/spinner1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:entries="@array/color_array"
-            />
+            android:id="@+id/backgroundSpinner"
+            android:background="@drawable/spinner_color"
+            style="@style/SpinnerStyle"/>
 
         <Spinner
-            android:id="@+id/spinner2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            />
+            android:id="@+id/pencilSpinner"
+            android:background="@drawable/spinner_color"
+            style="@style/SpinnerStyle" />
+
+        <ImageButton
+            android:id="@+id/eraseButton"
+            android:src="@drawable/eraser"
+            style="@style/ImageStyle" />
+
+        <ImageButton
+            android:id="@+id/undoButton"
+            android:src="@drawable/undo"
+            style="@style/ImageStyle" />
+
+        <ImageButton
+            android:id="@+id/saveButton"
+            android:src="@drawable/save"
+            style="@style/ImageStyle" />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
@@ -43,7 +58,5 @@
             android:layout_width="match_parent"/>
 
     </androidx.cardview.widget.CardView>
-
-
 
 </RelativeLayout>

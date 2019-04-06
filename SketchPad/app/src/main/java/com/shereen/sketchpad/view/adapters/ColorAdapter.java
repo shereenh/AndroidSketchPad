@@ -1,11 +1,10 @@
-package com.shereen.sketchpad.view;
+package com.shereen.sketchpad.view.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import com.shereen.sketchpad.R;
 
@@ -15,14 +14,16 @@ import java.util.ArrayList;
  * Created by shereen on 4/4/19
  */
 
-class SpinnerAdapter extends BaseAdapter
+public class ColorAdapter extends BaseAdapter
 {
     ArrayList<Integer> colors;
     Context context;
+    boolean isPencil;
 
-    public SpinnerAdapter(Context context)
+    public ColorAdapter(Context context, boolean isPencil)
     {
         this.context=context;
+        this.isPencil = isPencil;
         colors=new ArrayList<Integer>();
         int retrieve []=context.getResources().getIntArray(R.array.androidcolors);
         for(int re:retrieve)
@@ -49,11 +50,12 @@ class SpinnerAdapter extends BaseAdapter
     public View getView(int pos, View view, ViewGroup parent)
     {
         LayoutInflater inflater = LayoutInflater.from(context);
-        view = inflater.inflate(android.R.layout.simple_spinner_dropdown_item, null);
-        TextView txv=(TextView)view.findViewById(android.R.id.text1);
-        txv.setBackgroundColor(colors.get(pos));
-        txv.setTextSize(20f);
-        txv.setText("Text  "+pos);
+        if(isPencil){
+            view = inflater.inflate(R.layout.pencil_item, null);
+        }else{
+            view = inflater.inflate(R.layout.background_item, null);
+        }
+        view.setBackgroundColor(colors.get(pos));
         return view;
     }
 

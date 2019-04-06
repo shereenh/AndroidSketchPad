@@ -1,4 +1,4 @@
-package com.shereen.sketchpad.view.draw;
+package com.shereen.sketchpad.model.entity;
 
 import android.graphics.Path;
 
@@ -13,6 +13,10 @@ public class TouchPath {
     public boolean blur;
     public int strokeWidth;
     public Path path;
+
+    public TouchPath(){
+
+    }
 
     public TouchPath(int color, boolean emboss, boolean blur, int strokeWidth, Path path) {
         this.color = color;

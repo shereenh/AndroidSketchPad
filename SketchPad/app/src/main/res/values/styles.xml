@@ -8,4 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ImageStyle">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_width">@dimen/image_size</item>
+        <item name="android:layout_height">@dimen/image_size</item>
+        <item name="android:layout_marginStart">@dimen/tiny</item>
+        <item name="android:layout_marginEnd">@dimen/tiny</item>
+    </style>
+
+    <style name="SpinnerStyle">
+        <item name="android:layout_width">@dimen/spinner_size</item>
+        <item name="android:layout_height">@dimen/spinner_size</item>
+        <item name="android:layout_marginStart">@dimen/tiny</item>
+        <item name="android:layout_marginEnd">@dimen/tiny</item>
+    </style>
+
 </resources>

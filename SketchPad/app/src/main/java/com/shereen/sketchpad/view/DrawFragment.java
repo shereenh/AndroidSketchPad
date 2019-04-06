@@ -1,6 +1,9 @@
 package com.shereen.sketchpad.view;
 
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,13 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.shereen.sketchpad.Constants;
 import com.shereen.sketchpad.R;
+import com.shereen.sketchpad.view.adapters.ColorAdapter;
 import com.shereen.sketchpad.view.draw.SketchView;
-import com.shereen.sketchpad.view.draw.TouchPath;
+import com.shereen.sketchpad.model.entity.TouchPath;
 import com.shereen.sketchpad.viewmodel.MainViewModel;
 
 
@@ -31,27 +36,22 @@ public class DrawFragment extends Fragment implements SketchView.FragmentCallbac
 
     private SketchView sketchView;
     View rootView;
-    private Spinner spinner1, spinner2;
+    private Spinner pencilSpinner, backgroundSpinner;
+    private ImageButton eraseButton, undoButton, saveButton, galleryButton;
+
+    private OnFragmentInteractionListener mListener;
+
 
     public DrawFragment() {
         // Required empty public constructor
     }
-
-//    SketchView.FragmentCallback mCallback = new SketchView.FragmentCallback() {
-//        @Override
-//        public void onNewTouchPath(TouchPath path) {
-//            Log.d(Constants.LOGGER, "Got new path");
-//        }
-//    };
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_draw, container, false);
         init();
-
-        addListenerOnSpinnerItemSelection();
+        listeners();
 
         return rootView;
     }
@@ -59,7 +59,18 @@ public class DrawFragment extends Fragment implements SketchView.FragmentCallbac
     private void init(){
         mViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
 
-        sketchView = (SketchView) rootView.findViewById(R.id.sketchView);
+        eraseButton = rootView.findViewById(R.id.eraseButton);
+        undoButton = rootView.findViewById(R.id.undoButton);
+        saveButton = rootView.findViewById(R.id.saveButton);
+
+        backgroundSpinner = rootView.findViewById(R.id.backgroundSpinner);
+        backgroundSpinner.setAdapter(new ColorAdapter(getActivity(), false));
+        backgroundSpinner.setSelection(7);
+
+        pencilSpinner = rootView.findViewById(R.id.pencilSpinner);
+        pencilSpinner.setAdapter(new ColorAdapter(getActivity(), true));
+
+        sketchView = rootView.findViewById(R.id.sketchView);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         sketchView.setCallback(this);
@@ -67,58 +78,79 @@ public class DrawFragment extends Fragment implements SketchView.FragmentCallbac
         sketchView.normal();
     }
 
-    public void addListenerOnSpinnerItemSelection() {
-        spinner1 = (Spinner) rootView.findViewById(R.id.spinner1);
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view,
-                                       int position, long id) {
-                Object item = adapterView.getItemAtPosition(position);
-                if (item != null) {
-                    Toast.makeText(getActivity(), item.toString(),
-                            Toast.LENGTH_SHORT).show();
-                }
-                Toast.makeText(getActivity(), "Selected",
-                        Toast.LENGTH_SHORT).show();
+    public void listeners() {
 
-            }
+        eraseButton.setOnClickListener(v -> sketchView.clear());
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                // TODO Auto-generated method stub
+        undoButton.setOnClickListener(v -> sketchView.undo());
 
+        saveButton.setOnClickListener(v -> {
+            if(mListener != null){
+                mListener.onSaveBitmap(sketchView.getmBitmap());
             }
         });
 
+        galleryButton.setOnClickListener(v -> {
+            if(mListener != null) mListener.getGalleryBackground();
+        });
 
-        spinner2 = (Spinner) rootView.findViewById(R.id.spinner2);
-        spinner2.setAdapter(new SpinnerAdapter(getActivity()));
-        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
+        backgroundSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view,
-                                       int position, long id) {
-                Object item = adapterView.getItemAtPosition(position);
-                if (item != null) {
-                    Toast.makeText(getActivity(), item.toString(),
-                            Toast.LENGTH_SHORT).show();
-                }
-                Toast.makeText(getActivity(), "Selected",
-                        Toast.LENGTH_SHORT).show();
-
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                Integer item = (Integer) adapterView.getItemAtPosition(position);
+                if (item != null) sketchView.changeBackground(item);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                // TODO Auto-generated method stub
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
 
+        pencilSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                Integer item = (Integer) adapterView.getItemAtPosition(position);
+                if (item != null) sketchView.changeColor(item);
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
         });
     }
 
     @Override
     public void onNewTouchPath(TouchPath path) {
         Log.d(Constants.LOGGER, "Got new path 123");
+//        mViewModel.addStroke(path);
+    }
+
+    //    SketchView.FragmentCallback mCallback = new SketchView.FragmentCallback() {
+//        @Override
+//        public void onNewTouchPath(TouchPath path) {
+//            Log.d(Constants.LOGGER, "Got new path");
+//        }
+//    };
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onSaveBitmap(Bitmap bitmap);
+        void getGalleryBackground();
     }
 }

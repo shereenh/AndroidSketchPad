@@ -23,7 +23,7 @@
     <color name="cream">#FDF5E6</color>
     <color name="dark_cream">#FAEBD7</color>
 
-
+    <color name="gray">#808080</color>
 
     <color name="black">#000000</color>
 
@@ -39,6 +39,8 @@
         <item>@color/green</item>
         <item>@color/blue</item>
         <item>@color/purple</item>
+        <item>@color/black</item>
+        <item>@color/white</item>
 
     </integer-array>
 </resources>
