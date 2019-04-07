@@ -1,6 +1,8 @@
-package com.shereen.sketchpad;
+package com.shereen.sketchpad.view.helper;
 
 import android.graphics.Color;
+
+import com.shereen.sketchpad.R;
 
 /**
  * Created by shereen on 4/4/19
@@ -9,6 +11,7 @@ import android.graphics.Color;
 public class Constants {
 
     public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 9078;
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 9077;
 
     public static final String LOGGER = "SKETCH-PAD";
 
@@ -29,4 +32,8 @@ public class Constants {
     // room constants
     public static final String DATABASE_NAME = "sketchpad.db";
     public static final String TOUCH_PATH_TABLE = "touch_path";
+
+    //share
+    public static final String SHARE = "share";
+    public static final String SAVE = "save";
 }

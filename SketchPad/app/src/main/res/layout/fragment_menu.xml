@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    android:background="@color/gray"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.MenuFragment">
+
+    <Spinner
+        android:id="@+id/backgroundSpinner"
+        android:background="@drawable/spinner_color"
+        style="@style/SpinnerStyle"/>
+
+    <Spinner
+        android:id="@+id/pencilSpinner"
+        android:background="@drawable/spinner_color"
+        style="@style/SpinnerStyle" />
+
+    <ImageButton
+        android:id="@+id/eraseButton"
+        android:src="@drawable/eraser"
+        style="@style/ImageStyle" />
+
+    <ImageButton
+        android:id="@+id/undoButton"
+        android:src="@drawable/undo"
+        style="@style/ImageStyle" />
+
+    <ImageButton
+        android:id="@+id/saveButton"
+        android:src="@drawable/save"
+        style="@style/ImageStyle" />
+
+    <ImageButton
+        android:id="@+id/shareButton"
+        android:src="@drawable/share"
+        android:visibility="gone"
+        style="@style/ImageStyle" />
+
+</LinearLayout>

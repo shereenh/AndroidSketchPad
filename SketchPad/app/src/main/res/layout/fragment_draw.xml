@@ -5,49 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".view.DrawFragment">
 
-    <LinearLayout
-        android:layout_alignParentTop="true"
-        android:id="@+id/linearMenu"
-        android:gravity="center"
-        android:background="@color/gray"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <ImageButton
-            android:id="@+id/galleryButton"
-            android:src="@drawable/gallery"
-            style="@style/ImageStyle" />
-
-        <Spinner
-            android:id="@+id/backgroundSpinner"
-            android:background="@drawable/spinner_color"
-            style="@style/SpinnerStyle"/>
-
-        <Spinner
-            android:id="@+id/pencilSpinner"
-            android:background="@drawable/spinner_color"
-            style="@style/SpinnerStyle" />
-
-        <ImageButton
-            android:id="@+id/eraseButton"
-            android:src="@drawable/eraser"
-            style="@style/ImageStyle" />
-
-        <ImageButton
-            android:id="@+id/undoButton"
-            android:src="@drawable/undo"
-            style="@style/ImageStyle" />
-
-        <ImageButton
-            android:id="@+id/saveButton"
-            android:src="@drawable/save"
-            style="@style/ImageStyle" />
-    </LinearLayout>
-
     <androidx.cardview.widget.CardView
-        android:layout_below="@id/linearMenu"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

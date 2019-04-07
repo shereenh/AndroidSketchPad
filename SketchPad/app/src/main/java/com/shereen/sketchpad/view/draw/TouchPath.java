@@ -1,4 +1,4 @@
-package com.shereen.sketchpad.model.entity;
+package com.shereen.sketchpad.view.draw;
 
 import android.graphics.Path;
 

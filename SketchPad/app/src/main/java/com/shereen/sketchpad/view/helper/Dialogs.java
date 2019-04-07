@@ -1,18 +1,14 @@
-package com.shereen.sketchpad.view.dialog;
+package com.shereen.sketchpad.view.helper;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.text.InputType;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.shereen.sketchpad.R;
-import com.shereen.sketchpad.view.MainActivity;
-import com.shereen.sketchpad.view.helper.GalleryHelper;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -45,7 +41,7 @@ public class Dialogs {
         builder.setPositiveButton(context.getString(R.string.dialog_save), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                GalleryHelper.getSketchName(context, input.getText().toString(), bitmap);
+                GallerySave.getSketchName(context, input.getText().toString(), bitmap);
             }
         });
 
