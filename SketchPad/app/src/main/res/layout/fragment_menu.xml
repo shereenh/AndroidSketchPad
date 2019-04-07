@@ -1,42 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="center"
-    android:background="@color/gray"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.MenuFragment">
 
-    <Spinner
-        android:id="@+id/backgroundSpinner"
-        android:background="@drawable/spinner_color"
-        style="@style/SpinnerStyle"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.shereen.sketchpad.viewmodel.MainViewModel"/>
+    </data>
 
-    <Spinner
-        android:id="@+id/pencilSpinner"
-        android:background="@drawable/spinner_color"
-        style="@style/SpinnerStyle" />
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:gravity="center"
+        android:background="@color/gray"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.MenuFragment">
 
-    <ImageButton
-        android:id="@+id/eraseButton"
-        android:src="@drawable/eraser"
-        style="@style/ImageStyle" />
+        <Spinner
+            android:id="@+id/backgroundSpinner"
+            android:background="@drawable/spinner_color"
+            style="@style/SpinnerStyle"/>
 
-    <ImageButton
-        android:id="@+id/undoButton"
-        android:src="@drawable/undo"
-        style="@style/ImageStyle" />
+        <Spinner
+            android:id="@+id/pencilSpinner"
+            android:background="@drawable/spinner_color"
+            style="@style/SpinnerStyle" />
 
-    <ImageButton
-        android:id="@+id/saveButton"
-        android:src="@drawable/save"
-        style="@style/ImageStyle" />
+        <ImageButton
+            android:src="@drawable/eraser"
+            android:onClick="@{() -> viewmodel.clearSketchView()}"
+            style="@style/ImageStyle" />
 
-    <ImageButton
-        android:id="@+id/shareButton"
-        android:src="@drawable/share"
-        android:visibility="gone"
-        style="@style/ImageStyle" />
+        <ImageButton
+            android:src="@drawable/undo"
+            android:onClick="@{() -> viewmodel.undoSketchView()}"
+            style="@style/ImageStyle" />
 
-</LinearLayout>
+        <ImageButton
+            android:src="@drawable/save"
+            android:onClick="@{() -> viewmodel.saveBitmap()}"
+            style="@style/ImageStyle" />
+
+        <ImageButton
+            android:src="@drawable/share"
+            android:onClick="@{() -> viewmodel.shareBitmap()}"
+            android:visibility="gone"
+            style="@style/ImageStyle" />
+
+    </LinearLayout>
+
+</layout>

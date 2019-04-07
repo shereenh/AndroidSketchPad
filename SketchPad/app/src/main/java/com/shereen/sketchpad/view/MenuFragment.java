@@ -1,48 +1,41 @@
 package com.shereen.sketchpad.view;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageButton;
+
 import android.widget.Spinner;
 
 import com.shereen.sketchpad.R;
+import com.shereen.sketchpad.databinding.FragmentMenuBinding;
 import com.shereen.sketchpad.view.adapters.ColorAdapter;
-import com.shereen.sketchpad.view.helper.Constants;
-import com.shereen.sketchpad.view.helper.Utilities;
 import com.shereen.sketchpad.viewmodel.MainViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class MenuFragment extends Fragment {
 
     MainViewModel mViewModel;
-
+    FragmentMenuBinding binding;
     private Spinner pencilSpinner, backgroundSpinner;
-    private ImageButton eraseButton, undoButton, saveButton, shareButton;
-
     private View rootView;
 
     public MenuFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_menu, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_menu, container, false);
+        rootView = binding.getRoot();
         init();
         listeners();
         return rootView;
@@ -50,11 +43,7 @@ public class MenuFragment extends Fragment {
 
     private void init(){
         mViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
-
-        eraseButton = rootView.findViewById(R.id.eraseButton);
-        undoButton = rootView.findViewById(R.id.undoButton);
-        saveButton = rootView.findViewById(R.id.saveButton);
-        shareButton = rootView.findViewById(R.id.shareButton);
+        binding.setViewmodel(mViewModel);
 
         backgroundSpinner = rootView.findViewById(R.id.backgroundSpinner);
         backgroundSpinner.setAdapter(new ColorAdapter(getActivity(), false));
@@ -65,14 +54,6 @@ public class MenuFragment extends Fragment {
     }
 
     public void listeners() {
-
-        eraseButton.setOnClickListener(v -> mViewModel.clearSketchView());
-
-        undoButton.setOnClickListener(v -> mViewModel.undoSketchView());
-
-        saveButton.setOnClickListener(v -> mViewModel.saveBitmap());
-
-        shareButton.setOnClickListener(v -> mViewModel.shareBitmap());
 
         backgroundSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
