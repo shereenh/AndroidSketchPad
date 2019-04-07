@@ -27,7 +27,7 @@ public class Dialogs {
 
         final EditText input = new EditText(context);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setHint("Sketch name here");
+        input.setHint(R.string.sketch_hint);
         input.setSingleLine();
 
         LinearLayout container = new LinearLayout(context);

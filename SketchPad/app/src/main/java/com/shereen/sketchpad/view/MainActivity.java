@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
+
 import android.Manifest;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
+
 import com.shereen.sketchpad.model.Sketch;
 import com.shereen.sketchpad.view.helper.Constants;
 import com.shereen.sketchpad.R;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     MenuFragment menuFragment;
     Sketch currentBitmap;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init();
         observers();
+
     }
 
-    private void init(){
+    private void init() {
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         drawFragment = new DrawFragment();
         menuFragment = new MenuFragment();
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.menuFrame, menuFragment).commit();
     }
 
-    private void observers(){
+    private void observers() {
         mainViewModel.getLiveBitmap()
                 .observe(this, bitmap -> {
                     currentBitmap = bitmap;
@@ -59,23 +63,23 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     Constants.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-        }else{
+        } else {
             Dialogs.showSketchNameDialog(this, currentBitmap.getBitmap());
         }
     }
 
-    private void shareImage(){
+    private void shareImage() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     Constants.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-        }else if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
+        } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     Constants.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-        } else{
+        } else {
             //code to share
         }
     }
@@ -83,18 +87,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         if (grantResults.length <= 0
-                && grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.permission_denied), Toast.LENGTH_LONG).show();
             return;
         }
 
         switch (requestCode) {
             case Constants.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
-                    if(currentBitmap.getType().equals(Constants.SAVE)){
-                        saveImage();
-                    }else{
-                        shareImage();
-                    }
+                if (currentBitmap.getType().equals(Constants.SAVE)) {
+                    saveImage();
+                } else {
+                    shareImage();
+                }
             }
             break;
             case Constants.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:

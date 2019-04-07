@@ -47,14 +47,14 @@ public class SketchView extends View {
     int height;
     int width;
 
-    public boolean isBackgroundColor(){
+    public boolean isBackgroundColor() {
         return isBackgroundColor;
     }
 
-    public void setIfBackgroundColor(boolean value){
+    public void setIfBackgroundColor(boolean value) {
         isBackgroundColor = value;
     }
-    
+
     public SketchView(Context context) {
         this(context, null);
     }
@@ -71,13 +71,13 @@ public class SketchView extends View {
         mPaint.setXfermode(null);
         mPaint.setAlpha(0xff);
 
-        mEmboss = new EmbossMaskFilter(new float[] {1, 1, 1}, 0.4f, 6, 3.5f);
+        mEmboss = new EmbossMaskFilter(new float[]{1, 1, 1}, 0.4f, 6, 3.5f);
         mBlur = new BlurMaskFilter(5, BlurMaskFilter.Blur.NORMAL);
 
     }
 
 
-    public void drawPrevious(List<TouchPath> oldPaths){
+    public void drawPrevious(List<TouchPath> oldPaths) {
         paths.clear();
         paths.addAll(oldPaths);
         invalidate();
@@ -94,7 +94,7 @@ public class SketchView extends View {
         strokeWidth = Constants.BRUSH_SIZE;
     }
 
-    public Bitmap getmBitmap(){
+    public Bitmap getmBitmap() {
         return mBitmap;
     }
 
@@ -103,11 +103,11 @@ public class SketchView extends View {
         blur = false;
     }
 
-    public void changeColor(int color){
+    public void changeColor(int color) {
         currentColor = color;
     }
 
-    public void changeBackground(int color){
+    public void changeBackground(int color) {
         backgroundColor = color;
         invalidate();
     }
@@ -129,9 +129,9 @@ public class SketchView extends View {
         invalidate();
     }
 
-    public void undo(){
-        if(!paths.isEmpty()){
-            paths.remove(paths.size()-1);
+    public void undo() {
+        if (!paths.isEmpty()) {
+            paths.remove(paths.size() - 1);
             invalidate();
         }
     }
@@ -140,7 +140,7 @@ public class SketchView extends View {
     protected void onDraw(Canvas canvas) {
 //        Log.d(Constants.LOGGER, "onDraw");
         canvas.save();
-        if(isBackgroundColor){
+        if (isBackgroundColor) {
             mCanvas.drawColor(backgroundColor);
         }
 
@@ -195,16 +195,16 @@ public class SketchView extends View {
         float x = event.getX();
         float y = event.getY();
 
-        switch(event.getAction()) {
-            case MotionEvent.ACTION_DOWN :
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
                 touchStart(x, y);
                 invalidate();
                 break;
-            case MotionEvent.ACTION_MOVE :
+            case MotionEvent.ACTION_MOVE:
                 touchMove(x, y);
                 invalidate();
                 break;
-            case MotionEvent.ACTION_UP :
+            case MotionEvent.ACTION_UP:
                 touchUp();
                 invalidate();
                 break;

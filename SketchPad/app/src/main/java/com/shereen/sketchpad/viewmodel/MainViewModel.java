@@ -66,7 +66,6 @@ public class MainViewModel extends AndroidViewModel {
         liveBitmap.setValue(new Sketch(sketchView.getmBitmap(), Constants.SHARE));
     }
 
-
     public LiveData<Sketch> getLiveBitmap(){
         return liveBitmap;
     }
@@ -83,6 +82,5 @@ public class MainViewModel extends AndroidViewModel {
     public void changePencilColor(int color){
         sketchView.changeColor(color);
     }
-
 
 }

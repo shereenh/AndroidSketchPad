@@ -32,11 +32,13 @@
             style="@style/ImageStyle" />
 
         <ImageButton
+            android:id="@+id/undoButton"
             android:src="@drawable/undo"
             android:onClick="@{() -> viewmodel.undoSketchView()}"
             style="@style/ImageStyle" />
 
         <ImageButton
+            android:id="@+id/saveButton"
             android:src="@drawable/save"
             android:onClick="@{() -> viewmodel.saveBitmap()}"
             style="@style/ImageStyle" />
