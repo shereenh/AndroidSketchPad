@@ -7,6 +7,6 @@
 * Clear the canvas.
 * Save your masterpiece to your phone's gallery.
 
-## Future features: ###
+### Future Features: ###
 * Share your drawing from the app.
 * Import an existing picture from your phone's gallery and draw on top.
